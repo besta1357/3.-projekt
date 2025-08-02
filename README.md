@@ -1,4 +1,4 @@
-Elections Scraper – Volby do poslanecké sněmovny v rokku 2017
+Elections Scraper – Volby do poslanecké sněmovny z roku 2017
 
 Tento Python projekt slouží ke stažení a zpracování volebních výsledků z webu https://www.volby.cz pro volby do Poslanecké sněmovny v roce 2017. Výsledky z vybraného okresu jsou zpracovány a uloženy do CSV souboru.
 
