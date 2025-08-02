@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup as bs
 from requests import get, RequestException, HTTPError, ConnectionError
 from urllib.parse import urljoin
 
-def nacti_stranku(url):         # funkce nacte stranku, ziska odpoved a html jako text
+def nacti_stranku(url):         # funkce načte stránku, získa odpověď a html jako text
     try:
         odpoved = get(url)
         odpoved.raise_for_status()  
@@ -20,11 +20,11 @@ def nacti_stranku(url):         # funkce nacte stranku, ziska odpoved a html jak
     
     return None
     
-def udaje_okresu(url):          # funkce ziska z odkazu okresu nazvy a kody obci a url odkazy na jednotlice obce v danem okrese
+def udaje_okresu(url):          # funkce získa z odkazu okresu názvy a kody obcí a url odkazy na jednotlivé obce v danem okrese
     html = nacti_stranku(url)
     radky = html.find_all("tr")
     odkazy = []
-                                # pomoci tagu tr, td a aributu href ziskame pozadovane udaje
+                                # pomocí tagu tr, td a aributu href získame požadované údaje
     for radek in radky:
         cislo_td = radek.find("td", class_="cislo")
         nazev_td = radek.find("td", class_="overflow_name")
@@ -37,8 +37,8 @@ def udaje_okresu(url):          # funkce ziska z odkazu okresu nazvy a kody obci
             odkazy.append((nazev_obce, kod_obce, url_odkaz))
     return odkazy
 
-def zpracovani_obci(nazev_obce, kod_obce, url):          # funkce zpracuje vysledky z jednotlivych obci: pocet volicu, pocet obalek a pocet platnych hlasu
-    html = nacti_stranku(url)                            # a přida názvy stran a počet hlasu pro jednotlivé strany
+def zpracovani_obci(nazev_obce, kod_obce, url):          # funkce zpracuje vysledky z jednotlivých obcí: počet voličů, počet obálek a počet platných hlasů
+    html = nacti_stranku(url)                            # a přidá názvy stran a počet hlasů pro jednotlivé strany
         
     def vysledky_obce (id_tag):
         vysledek = html.find("td", {"headers": id_tag})
@@ -80,10 +80,10 @@ def main():
         print("Správné použití: python main.py <URL> <vystupni_soubor.csv>")
         return
     
-    if not vstupni_url.startswith("https://www.volby.cz/pls/ps2017nss/"):   #ošetření, když by vstupní url odkazovala jinam než na volby
+    if not vstupni_url.startswith("https://www.volby.cz/pls/ps2017nss/"):   #ošetření, když by vstupní url odkazovala jinam než na volby z roku 2017
         print("Zadaná adresa je chybná")
         return
-    if not vystupni_soubor.endswith(".csv"):                                #ošetření že druhy argument musi být csv.soubor
+    if not vystupni_soubor.endswith(".csv"):                                #ošetření, že druhy argument musi být csv.soubor
         print("Chyba: druhý argument musí být výstupní soubor s příponou .csv")
         return
 
@@ -103,7 +103,7 @@ def main():
                     vsechny_strany.append(strana)
                       
     try:
-        with open(vystupni_soubor, mode= "w", newline= "", encoding= "utf-8") as f:         # zapis dat do csv souboru
+        with open(vystupni_soubor, mode= "w", newline= "", encoding= "utf-8") as f:         # zápis dat do csv souboru
             zapisovac = csv.writer(f)
             hlavicka = ["code", "location", "registered", "envelopes", "valid"] + vsechny_strany
             zapisovac.writerow(hlavicka)
@@ -129,4 +129,4 @@ def main():
     
 
 if __name__ == "__main__":
-    main()           
+    main()
