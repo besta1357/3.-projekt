@@ -23,11 +23,11 @@ pip install -r requirements.txt
 
 Skript se spouští z příkazové řádky a očekává **2 argumenty**:
 
-1. URL adresa okresu z webu volby.cz
+1. "URL" adresa okresu z webu volby.cz
 2. Název výstupního `.csv` souboru
-
+"
 ```bash
-python vysledky.py "https://www.volby.cz/pls/ps2017nss/ps32?xjazyk=CZ&xkraj=10&xnumnuts=6203" vysledky.csv
+python main.py "https://www.volby.cz/pls/ps2017nss/ps32?xjazyk=CZ&xkraj=10&xnumnuts=6203" okres_vysledky.csv
 ```
 
 ---
@@ -44,7 +44,7 @@ python vysledky.py "https://www.volby.cz/pls/ps2017nss/ps32?xjazyk=CZ&xkraj=10&x
 ## Ukázka použití
 
 ```bash
-python vysledky.py "https://www.volby.cz/pls/ps2017nss/ps32?xjazyk=CZ&xkraj=2&xnumnuts=2101" Benesov_vysledky.csv
+python main.py "https://www.volby.cz/pls/ps2017nss/ps32?xjazyk=CZ&xkraj=2&xnumnuts=2101" Benesov_vysledky.csv
 ```
 
 Výstup v konzoli:
