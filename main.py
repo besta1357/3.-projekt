@@ -1,8 +1,10 @@
-import sys
 import csv
+import os
+import sys
 from bs4 import BeautifulSoup as bs
-from requests import get, RequestException, HTTPError, ConnectionError
 from urllib.parse import urljoin
+from requests import get, RequestException, HTTPError, ConnectionError
+
 
 def nacti_stranku(url):         # funkce načte stránku, získa odpověď a html jako text
     try:
@@ -74,6 +76,16 @@ def main():
     
     vstupni_url = sys.argv[1]
     vystupni_soubor = sys.argv[2]
+
+    if os.path.exists(vystupni_soubor):
+        zaklad, pripona = os.path.splitext(vystupni_soubor)
+        i = 1
+        novy_nazev = f"{zaklad}({i}){pripona}"
+        while os.path.exists(novy_nazev):
+            i += 1
+            novy_nazev = f"{zaklad}({i}){pripona}"
+        print(f"Soubor {vystupni_soubor} již existuje. Výstup bude uložen jako: {novy_nazev}")
+        vystupni_soubor = novy_nazev
 
     if not vstupni_url.startswith(("http://", "https://", "www.")):         #ošetření špatně zadané adresy
         print("Chyba: první argument musí být URL začínající na http://, https:// nebo www.")
