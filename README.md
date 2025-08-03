@@ -50,7 +50,7 @@ python main.py "https://www.volby.cz/pls/ps2017nss/ps32?xjazyk=CZ&xkraj=2&xnumnu
 Výstup v konzoli:
 
 ```
-Hotovo. Výsledky uloženy do: vysledky.csv
+Hotovo. Výsledky uloženy do: Benesov_vysledky.csv
 ```
 
 Ukázka obsahu `Benesov_vysledky.csv` (zkrácená):
