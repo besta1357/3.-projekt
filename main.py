@@ -72,7 +72,7 @@ def zpracovani_obci(nazev_obce, kod_obce, url):          # funkce zpracuje vysle
 
 def main():
     if len(sys.argv) != 3:
-        print("Při spouštění, zadej: python vysledky.py <URL> <vystupni_soubor.csv>")
+        print("Při spouštění, zadej: python vysledky.py <URL v uvozovkách> <vystupni_soubor.csv>")
         return
     
     vstupni_url = sys.argv[1]
