@@ -23,8 +23,11 @@ def nacti_stranku(url):         # funkce načte stránku, získa odpověď a htm
     
     return None
     
-def udaje_okresu(url):          # funkce získa z odkazu okresu názvy a kody obcí a url odkazy na jednotlivé obce v danem okrese
-    html = nacti_stranku(url)
+def udaje_okresu(url):          # funkce získa z odkazu okresu názvy a kody obcí
+    html = nacti_stranku(url)   #  a url odkazy na jednotlivé obce v danem okrese
+    if not html:
+        print("Chyba při načítání stránky.")
+        return
     radky = html.find_all("tr")
     odkazy = []
                                 # pomocí tagu tr, td a aributu href získame požadované údaje
@@ -40,8 +43,11 @@ def udaje_okresu(url):          # funkce získa z odkazu okresu názvy a kody ob
             odkazy.append((nazev_obce, kod_obce, url_odkaz))
     return odkazy
 
-def zpracovani_obci(nazev_obce, kod_obce, url):          # funkce zpracuje vysledky z jednotlivých obcí: počet voličů, počet obálek a počet platných hlasů
-    html = nacti_stranku(url)                            # a přidá názvy stran a počet hlasů pro jednotlivé strany
+def zpracovani_obci(nazev_obce, kod_obce, url):          # funkce zpracuje vysledky z jednotlivých obcí: 
+    html = nacti_stranku(url)                            # počet voličů, počet obálek a počet platných hlasů
+    if html is None:                                     # a přidá názvy stran a počet hlasů pro jednotlivé strany
+        print(f"Chyba při načítání obce: {nazev_obce} ({kod_obce}) - stránka se nepodařila načíst.")
+        return None                                     
         
     def vysledky_obce (id_tag):
         vysledek = html.find("td", {"headers": id_tag})
@@ -70,6 +76,15 @@ def zpracovani_obci(nazev_obce, kod_obce, url):          # funkce zpracuje vysle
             "strany": strany
         }
 
+def vytvor_novy_nazev(soubor):
+    zaklad, pripona = os.path.splitext(soubor)
+    i = 1
+    novy_nazev = f"{zaklad}({i}){pripona}"
+    while os.path.exists(novy_nazev):
+        i += 1
+        novy_nazev = f"{zaklad}({i}){pripona}"
+    return novy_nazev
+
 def main():
     if len(sys.argv) != 3:
         print("Při spouštění, zadej: python vysledky.py <URL v uvozovkách> <vystupni_soubor.csv>")
@@ -79,12 +94,7 @@ def main():
     vystupni_soubor = sys.argv[2]
 
     if os.path.exists(vystupni_soubor):
-        zaklad, pripona = os.path.splitext(vystupni_soubor)
-        i = 1
-        novy_nazev = f"{zaklad}({i}){pripona}"
-        while os.path.exists(novy_nazev):
-            i += 1
-            novy_nazev = f"{zaklad}({i}){pripona}"
+        novy_nazev = vytvor_novy_nazev(vystupni_soubor)  # pokud soubor již existuje, vytvoří nový název
         print(f"Soubor {vystupni_soubor} již existuje. Výstup bude uložen jako: {novy_nazev}")
         vystupni_soubor = novy_nazev
 
