@@ -1,3 +1,9 @@
+"""
+main.py: třetí projekt do Engeto Online Python Akademie
+
+author: Peter Sebest
+email: psebest11@gmail.com
+"""
 import csv
 import os
 import sys
