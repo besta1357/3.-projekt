@@ -24,7 +24,7 @@ def nacti_stranku(url):         # funkce načte stránku, získa odpověď a htm
     return None
     
 def udaje_okresu(url):          # funkce získa z odkazu okresu názvy a kody obcí
-    html = nacti_stranku(url)   #  a url odkazy na jednotlivé obce v danem okrese
+    html = nacti_stranku(url)   # a url odkazy na jednotlivé obce v danem okrese
     if not html:
         print("Chyba při načítání stránky.")
         return
@@ -98,15 +98,15 @@ def main():
         print(f"Soubor {vystupni_soubor} již existuje. Výstup bude uložen jako: {novy_nazev}")
         vystupni_soubor = novy_nazev
 
-    if not vstupni_url.startswith(("http://", "https://", "www.")):         #ošetření špatně zadané adresy
+    if not vstupni_url.startswith(("http://", "https://", "www.")):         # ošetření špatně zadané adresy
         print("Chyba: první argument musí být URL začínající na http://, https:// nebo www.")
         print("Správné použití: python main.py <URL> <vystupni_soubor.csv>")
         return
     
-    if not vstupni_url.startswith("https://www.volby.cz/pls/ps2017nss/"):   #ošetření, když by vstupní url odkazovala jinam než na volby z roku 2017
+    if not vstupni_url.startswith("https://www.volby.cz/pls/ps2017nss/"):   # ošetření, když by vstupní url odkazovala jinam než na volby z roku 2017
         print("Zadaná adresa je chybná")
         return
-    if not vystupni_soubor.endswith(".csv"):                                #ošetření, že druhy argument musi být csv.soubor
+    if not vystupni_soubor.endswith(".csv"):                                # ošetření, že druhy argument musi být csv.soubor
         print("Chyba: druhý argument musí být výstupní soubor s příponou .csv")
         return
 
